@@ -92,6 +92,16 @@ exports.up = async function(knex) {
       table.jsonb('grid_points');
     }),
 
+    knex.schema.createTable('sensor', function (table){
+      table.uuid('sensor_id').primary().defaultTo(knex.raw('uuid_generate_v1()'));
+      table.string('sensor_name').notNullable();
+      table.uuid('field_id')
+        .references('field_id')
+        .inTable('field');
+      table.unique(['sensor_id', 'field_id']);
+      table.jsonb('point');
+    },
+
     knex.schema.createTable('bed', function (table) {
       table.uuid('bed_id').primary().defaultTo(knex.raw('uuid_generate_v1()'));
       table.uuid('field_id')

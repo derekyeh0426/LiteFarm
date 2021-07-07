@@ -35,7 +35,7 @@ Model.knex(knex);
 const loginRoutes = require('./routes/loginRoute');
 const cropRoutes = require('./routes/cropRoute');
 const fieldRoutes = require('./routes/fieldRoute');
-const sensorRoutes = require('./routes/sensorRoutes');
+const sensorRoutes = require('./routes/sensorRoute');
 // const planRoutes = require('./routes/planRoute');
 const saleRoutes = require('./routes/saleRoute');
 //const shiftTaskRoutes = require('./routes/shiftTaskRoute');

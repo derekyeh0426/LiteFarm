@@ -61,6 +61,7 @@ const apiConfig = {
   resetPasswordUrl: `${URI}/password_reset`,
   spotlightUrl: `${URI}/showed_spotlight`,
   url: URI,
+  sensorURL: `${URI}/sensor`,
 };
 
 module.exports = apiConfig;
