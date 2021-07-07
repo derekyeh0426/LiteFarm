@@ -138,7 +138,6 @@ app.use(bodyParser.json())
   .use('/export', exportRoute)
   .use('/showed_spotlight', showedSpotlightRoutes)
 
-
   // handle errors
   .use((req, res, next) => {
     const error = new Error('Not found');
