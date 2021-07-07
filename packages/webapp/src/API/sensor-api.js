@@ -28,4 +28,13 @@ export default class sensorClient {
       console.log(e.message);
     }
   }
+
+  static async addSensor({ name, id, lat, lng }) {
+    try {
+      const response = await axios.delete(sensorURL, { name, id, lat, lng });
+      return response;
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
 }

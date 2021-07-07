@@ -91,7 +91,10 @@ exports.up = async function(knex) {
       table.unique(['field_id', 'farm_id']);
       table.jsonb('grid_points');
     }),
-
+    /*
+    sensor will have a name, a lat long point, a sensor id and a field_id as a foreign key referencing field_id in field table. 
+    For now I didnt put on delete cascade because it seems sensors doesnt necessary have to be deleted along side with fields
+    */
     knex.schema.createTable('sensor', function (table){
       table.uuid('sensor_id').primary().defaultTo(knex.raw('uuid_generate_v1()'));
       table.string('sensor_name').notNullable();

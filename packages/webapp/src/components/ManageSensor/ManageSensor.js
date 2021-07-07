@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import { Button, Form, ModalBody, Modal, Col, Row, Container } from 'react-bootstrap';
+import { Button, Form, ModalBody, Modal, Col, Row } from 'react-bootstrap';
 import client from '../../API/api';
 
-export class ManageSensor extends React.Component {
+export class ManageSensor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
-      fields: [],
       selectFarm: null,
       farms: [],
       sensors: [],
-      selectField: null,
     };
   }
 
@@ -30,17 +28,19 @@ export class ManageSensor extends React.Component {
   }
 
   setFarm = (e) => {
-    let farmId = e.target.value.id;
-    this.setState({ selectFarm: e.target.value.name });
-    client.sensorClient.getSensorById(farmId).then((res) => {
-      this.setState({ fields: res.data });
+    let farmId = e.target.value.farm_id;
+    this.setState({ selectFarm: e.target.value.farm_name });
+    client.sensorClient.getSensorsByFarmId(farmId).then((res) => {
+      this.setState({ sensors: res.data });
     });
   };
 
-  setField = (e) => {
-    this.setState({ selectField: e.target.value.name });
-    client.field.getFieldsByFarmId(farmId).then((res) => {
-      this.setState({ fields: res.data });
+  handleDelete = (e, id, index) => {
+    e.preventDefault();
+    let newSensors = this.state.sensors;
+    client.sensor.deleteSensorById(id).then((res) => {
+      newSensors.splice(index, 1);
+      this.setState({ sensors: newSensors });
     });
   };
 
@@ -59,48 +59,36 @@ export class ManageSensor extends React.Component {
               <option>Select your farm</option>
               {this.state.farms.map((farm) => {
                 return (
-                  <option key={farm.id} value={farm} data-key={farm.name}>
-                    {farm.name}
+                  <option key={farm.farm_id} value={farm} data-key={farm.farm_name}>
+                    {farm.farm_name}
                   </option>
                 );
               })}
             </Form.Control>
             <br />
-            <Form.Control onClick={this.setFarm} as="select" single>
-              <option>Select your farm</option>
-              {this.state.fields.map((field) => {
-                return (
-                  <option key={field.id} value={farm} data-key={field.name}>
-                    {field.name}
-                  </option>
-                );
-              })}
-            </Form.Control>
-            {this.state.fields.map((post, index) => {
-              if (!this.state.filterTopic || this.state.filterTopic == post.topic.name) {
-                return (
-                  <div>
-                    <Row>
-                      <Col sm={8}>{toTitleCase(post.title)}</Col>
-                      <Col sm={2}>
-                        <UpdatePostModalForm post={post} />
-                      </Col>
-                      <Col sm={2}>
-                        <Button
-                          onClick={(e) => {
-                            this.handleDelete(e, index);
-                          }}
-                          variant={'outline-danger'}
-                        >
-                          {' '}
-                          Delete
-                        </Button>
-                      </Col>
-                    </Row>
-                    <br />
-                  </div>
-                );
-              }
+            {this.state.sensors.map((sensor, index) => {
+              return (
+                <div>
+                  <Row>
+                    <Col sm={8}>Field: {sensor.field_id}</Col>
+                    <Col sm={2}>
+                      <ManageSensorForm sensor={sensor} />
+                    </Col>
+                    <Col sm={2}>
+                      <Button
+                        onClick={(e) => {
+                          this.handleDelete(e, sensor.sensor_id, index);
+                        }}
+                        variant={'outline-danger'}
+                      >
+                        {' '}
+                        Delete
+                      </Button>
+                    </Col>
+                  </Row>
+                  <br />
+                </div>
+              );
             })}
           </ModalBody>
           <Modal.Footer>
@@ -113,3 +101,5 @@ export class ManageSensor extends React.Component {
     );
   }
 }
+
+export default ManageSensor;

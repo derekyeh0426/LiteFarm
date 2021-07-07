@@ -77,14 +77,13 @@ const sensorController = {
         }
       },
 
+    //This function utilizes the getFieldByFarmID in fieldcontroller, I figure it's kinda handy to just use that function
     getSensorByFarmID() {
         return async (req, res) => {
           try {
             const farm_id = req.params.farm_id;
             const rows = await fieldController.getFieldByFarmID(farm_id);
             if (!rows.length) {
-              res.status(200).send(rows);
-            } else {
               let sensorRows = [];
               for (i = 0 ; i < rows.length; i ++){
                 sensorRows.push(await this.getByForeignKey(rows[i].field_id));
@@ -106,8 +105,6 @@ const sensorController = {
             const field_id = req.params.field_id;
             const rows = await this.getByForeignKey(field_id);
             if (!rows.length) {
-              res.status(200).send(rows);
-            } else {
               res.status(200).send(rows);
             }
           } catch (error) {
