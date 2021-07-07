@@ -20,6 +20,8 @@ import Routes from './Routes.js';
 import './locales/i18n';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import AddSensor from './components/ManageSensor/AddSensor';
+import ManageSensor from './components/ManageSensor/ManageSensor';
 
 const useStyles = makeStyles((theme) => ({
   container: {
