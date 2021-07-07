@@ -59,7 +59,7 @@ const sensorController = {
             if (!updated.length) {
               await trx.rollback();
               res.sendStatus(404);
-            } else if (updated[0].sensor_name.length === 0 ||updated[0].sensor_id === null) {
+            } else if (updated[0].sensor_name.length === 0 ||updated[0].sensor_id === null ||updated[0].sensor_lat === null ||updated[0].sensor_lng === null) {
               await trx.rollback();
               res.sendStatus(403);
             }
