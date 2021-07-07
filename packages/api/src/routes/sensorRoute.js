@@ -7,9 +7,9 @@ const authFarmId = require('../middleware/acl/authFarmId');
 const hasFarmAccess = require('../middleware/acl/hasFarmAccess');
 
 /*
-I encounter a connection refuse error, at first i thought it was a google chrome problem but turned out it was the backend never running(after asking Kika)
-It's kinda weird because docker-compose initially have the backend set up correctly, but then it stopped by itself(I thought it was still running...). Unfortunatelly
-I coulnd't solve this bug because I realized this at the last day. So I can't really test the end points, but here is what I think the router, the model and how the controller should work
+I encounter a connection refuse error, at first I thought it was a google chrome problem but turned out it was the backend never running(after asking Kika)
+It's kinda weird because docker-compose initially have the backend set up correctly, but then it stopped by itself(I thought it was still running...). Unfortunately
+I couldn't solve this bug because I realized this at the last day. So I can't really test the end points, but here is what I think the router, the model and how the controller should work
 */
 router.get('/farm/:farm_id', authFarmId, sensorController.getSensorByFarmID());
 
